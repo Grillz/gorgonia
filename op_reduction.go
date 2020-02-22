@@ -55,6 +55,9 @@ func reductionInferShape(along []int, in tensor.Shape) (tensor.Shape, error) {
 		shape[d] = 1
 	}
 	// special cases: if all dimensions are 1 -> ScalarShape, if exactly one dimension is != 1 -> vector
+	if shape.Eq(tensor.Shape{1, 1}) {
+		return tensor.Shape{1}, nil
+	}
 	vecD := 0
 	numNot1 := 0
 	for _, d := range shape {
